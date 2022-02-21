@@ -1,0 +1,18 @@
+<ul>
+  <li *ngFor="let author of authors">
+    {{author.firstName}} {{author.lastName}}
+    <button type="button" (click)="deleteAuthor(author)">x</button>
+  </li>
+</ul>
+
+<div>
+  <label for="firstName">First Name: </label>
+  <input type="text" name="firstName" id="firstName" #firstName />
+
+  <label for="lastName">Last Name: </label>
+  <input type="text" name="lastName" id="lastName" #lastName />
+
+  <button type="button" (click)="addAuthor(firstName.value, lastName.value); firstName.value=''; lastName.value=''">
+    Add author
+  </button>
+</div>

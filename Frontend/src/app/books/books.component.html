@@ -1,0 +1,20 @@
+<ul>
+  <li *ngFor="let book of books">
+    {{book.title}}| <span *ngFor="let author of book.authors">{{author.firstName}} {{author.lastName}}</span>
+    <button type="button" (click)="deleteBook(book)" class="btn-danger">x</button>
+  </li>
+</ul>
+
+<div>
+  <label for="title">Title: </label>
+  <input type="text" name="title" id="title" #title />
+
+  <label for="author">Authors: </label>
+  <select formControllName="author" [(ngModel)]="selectedAuthors" multiple>
+    <option *ngFor="let author of authors" [value]="author">{{author.firstName}} {{author.lastName}}</option>
+  </select>
+
+  <button type="button" (click)="addBook(title.value, selectedAuthors); title.value=''">
+    Add book
+  </button>
+</div>
