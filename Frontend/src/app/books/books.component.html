@@ -1,20 +1,25 @@
-<ul>
-  <li *ngFor="let book of books">
-    {{book.title}}| <span *ngFor="let author of book.authors">{{author.firstName}} {{author.lastName}}</span>
-    <button type="button" (click)="deleteBook(book)" class="btn-danger">x</button>
-  </li>
-</ul>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <tbody class="border-top">
+      <tr *ngFor="let book of books">
+        <th>{{book.title}}</th>
+        <th><span *ngFor="let author of book.authors">{{author.firstName}} {{author.lastName}}, </span></th>
+        <th><button type="button" class="btn btn-danger" (click)="deleteBook(book)">x</button></th>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div>
-  <label for="title">Title: </label>
-  <input type="text" name="title" id="title" #title />
+  <label for="title" class="form-label">Title: </label>
+  <input type="text" name="title" id="title" #title class="form-control"/>
 
-  <label for="author">Authors: </label>
-  <select formControllName="author" [(ngModel)]="selectedAuthors" multiple>
+  <label for="author" class="form-label">Authors: </label>
+  <select formControllName="author" [(ngModel)]="selectedAuthors" multiple class="form-select">
     <option *ngFor="let author of authors" [value]="author">{{author.firstName}} {{author.lastName}}</option>
   </select>
 
-  <button type="button" (click)="addBook(title.value, selectedAuthors); title.value=''">
+  <button type="button" class="btn btn-primary" (click)="addBook(title.value, selectedAuthors); title.value=''">
     Add book
   </button>
 </div>

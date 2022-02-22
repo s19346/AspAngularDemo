@@ -7,10 +7,12 @@ namespace Backend.Repositories
     public class SqlService  : IDbService
     {
         private readonly Context _context;
+        private Dictionary<int, int> idBookToNumberOfAuthors;
 
         public SqlService(Context context)
         {
             _context = context;
+            idBookToNumberOfAuthors = _context.Books.Select(b => new { b.IdBook, b.AuthorBooks.Count }).ToDictionary(b => b.IdBook, b => b.Count);
         }
 
         public async Task<ICollection<Author>> GetAuthorsAsync()
@@ -35,7 +37,10 @@ namespace Backend.Repositories
             var authorBooks = await _context.AuthorBooks.Where(a => a.IdAuthor == author.IdAuthor).ToListAsync();
             if (authorBooks.Any())
             {
+                var idBooksToRemove = authorBooks.Where(ab => idBookToNumberOfAuthors.GetValueOrDefault(ab.IdBook) == 1).Select(ab => ab.IdBook);
+                var booksToRemove = await _context.Books.Where(b => idBooksToRemove.Contains(b.IdBook)).ToListAsync();
                 _context.RemoveRange(authorBooks);
+                _context.Books.RemoveRange(booksToRemove);
             }
             _context.Remove(author);
             return await _context.SaveChangesAsync() > 0;

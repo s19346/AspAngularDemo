@@ -1,18 +1,23 @@
-<ul>
-  <li *ngFor="let author of authors">
-    {{author.firstName}} {{author.lastName}}
-    <button type="button" (click)="deleteAuthor(author)">x</button>
-  </li>
-</ul>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <tbody class="border-top">
+      <tr *ngFor="let author of authors">
+        <th>{{author.firstName}}</th>
+        <th>{{author.lastName}}</th>
+        <th><button type="button" class="btn btn-danger" (click)="deleteAuthor(author)">x</button></th>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div>
-  <label for="firstName">First Name: </label>
-  <input type="text" name="firstName" id="firstName" #firstName />
+  <label for="firstName" class="form-label">First Name: </label>
+  <input type="text" name="firstName" id="firstName" #firstName class="form-control"/>
 
-  <label for="lastName">Last Name: </label>
-  <input type="text" name="lastName" id="lastName" #lastName />
+  <label for="lastName" class="form-label">Last Name: </label>
+  <input type="text" name="lastName" id="lastName" #lastName class="form-control"/>
 
-  <button type="button" (click)="addAuthor(firstName.value, lastName.value); firstName.value=''; lastName.value=''">
+  <button type="button" class="btn btn-primary" (click)="addAuthor(firstName.value, lastName.value); firstName.value=''; lastName.value=''">
     Add author
   </button>
 </div>
